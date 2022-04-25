@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ header }}
+{% endblock %}
+
+{% block content %}
+    <div class="alert alert-success shadow mx-auto">
+        <h1 class="fst-italic fw-lighter">{{ header }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-error"> {{ form.non_field_errors }}</div>
+            {% for p in form %}
+                <p><label for="{{ p.id_for_label }}">
+                <h2>{{ p.label }}:</h2>
+                <div style="font-size: 25px">{{ p }}</div>
+                <div>{{ p.errors }}</div>
+            {% endfor %}
+            <div class='homebutton'>
+                <div class="ms-5">
+                    <p>
+                        <button class="btn btn-primary shadow mt-3" style="margin-left: 13%; width: 100px; font-size: 23px"
+                                type="submit">Вход
+                        </button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

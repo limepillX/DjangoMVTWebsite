@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ post.name }}
+{% endblock %}
+
+{% block content %}
+    <p class="ms-5 ps-5 pt-3 text-muted mb-0 fst-italic">{{ post.time_create }}</p>
+    <h3 class="ms-5 ps-5">{{ post.name }}</h3>
+    <br><br>
+    <div class="container">
+        <div>
+            <img class="img-thumbnail shadow" style="width: 500px" src="{{ post.Photo.url }}"
+                 alt="Фото">
+        </div>
+        <p class="fs-5 m-5"> {{ post.description|linebreaks }}</p>
+        {% if post.Video %}
+            {% autoescape off %}
+                <iframe style="height: 360px; width: 640px" class="ms-5 mt-5" allowfullscreen
+                        src="{{ post.Video }}">
+                </iframe>
+            {% endautoescape %}
+        {% endif %}
+        <div class="d-flex flex-row-reverse mt-5">
+            <p class="fs-4 text-muted fst-italic">Автор: {{ post.author }}</p>
+
+
+        </div>
+    </div>
+
+{% endblock %}

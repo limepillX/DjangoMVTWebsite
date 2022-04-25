@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ header }}
+{% endblock %}
+{% block content %}
+    <div class="container">
+    <h1 class="fst-italic fw-lighter">{{ header }}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-error"> {{ form.non_field_errors }}</div>
+
+        {% for p in form %}
+            {% if p.label == "Author" or p.label == "Получатель" or p.label == "Запрос"%}
+                <div hidden>{{ p }}</div>
+            {% else %}
+                <label for="{{ p.id_for_label }}" class="my-3"> <h3>{{ p.label }}:</h3>{{ p }}</label>
+                <div>{{ p.errors }}</div>
+            {% endif %}
+        {% endfor %}
+        <div class='homebutton'>
+                <p>
+                    <button class="btn btn-primary shadow fw-light mt-4 fs-4" type="submit">
+                        Отправить
+                    </button>
+                </p>
+        </div>
+    </form>
+    </div>
+{% endblock %}

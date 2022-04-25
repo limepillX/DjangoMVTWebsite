@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ header }}
+{% endblock %}
+{% block content %}
+
+    <img rel="shortcut icon" src="{% static 'vasya.jpg' %}"
+         class="mt-5 mx-auto d-block shadow d-flex justify-content-center rounded-circle shadow" alt="Депутат" style="height: 350px">
+
+    <h2 class="d-flex justify-content-center fst-italic fw-lighter mb-5">Василий пупкин, депутат Мосгордумы</h2>
+
+    <div class="d-flex container" style="text-align: revert; ">
+        <h4>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Мне 48 лет. Из них 40 лет живу в нашем городе.
+            <p class="my-3">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;По образованию я врач, менеджер, давно и серьёзно занимаюсь
+                вопросами кризисного управления, получив для
+                этого дополнительное образование.
+            <p class="my-3">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Я, как и многие из вас, хочу увидеть наш город комфортным для
+                проживания и удобным, приспособленным для
+                реализации людьми всех своих амбиций, способностей и талантов. Хочу, чтобы в нашем городе становилось
+                как
+                можно больше людей, довольных жизнью и максимально реализовавших себя. Кроме того, я намерен сделать наш
+                город местом, в котором наши пенсионеры, люди, которые отдали много лет своей жизни трудам и хлопотам,
+                могли
+                чувствовать себя в нашем городе нужными, востребованными, необходимыми и защищёнными.
+                </h4>
+    </div>
+
+    <div class="container">
+        <p>
+            <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample">
+                <h4><i class="fw-lighter" style="text-align: center;">Кто такой депутат?</i></h4>
+            </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body ms-5">
+                <h4>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Если коротко, депутат Государственной думы – представитель народа,
+                который осуществляет законодательные
+                полномочия.
+                    </h4>
+            </div>
+        </div>
+    </div>
+
+     <div class="container">
+        <p>
+            <button class="btn btn-outline-success mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#second"
+                    aria-expanded="false" aria-controls="collapseExample">
+                <h4><i class="fw-lighter" style="text-align: center;">Чем депутат может быть полезен?</i></h4>
+            </button>
+        </p>
+        <div class="collapse" id="second">
+            <div class="card card-body ms-5">
+                <h4>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Во-первых, каждый депутат обладает правом законодательной
+                инициативы. А это значит, что избиратели могут
+                через депутата инициировать законопроект. Например, обязать банки предоставлять кредитные каникулы,
+                запретить коллекторам звонить в неурочный час, ограничить максимальную ставку по микрокредитам,
+                увеличить
+                налоговый вычет с расходов на образование детей, установить ежемесячную выплату на детей и даже отменить
+                ЕГЭ.
+                Это все делает Государственная дума. Затем законопроект утверждает Совет Федерации и президент.
+                Правительство исполняет закон, а суд и прокуратура следят, чтобы законы исполнялись верно.
+                </h4>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

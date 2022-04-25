@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ request.subject }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    {% if user.is_superuser %}
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for p in form %}
+                <p><label for="{{ p.id_for_label }}"> <h3>{{ p.label }}:{{ p }}</h3>
+                <input class="btn btn-secondary mx-2 my-3" style="font-size: 25px" type="submit" value="Обновить"/>
+            {% endfor %}
+        </form>
+        {% else %}
+        <h1>Доступ запрещён!</h1>
+    {% endif %}
+    </div>
+{% endblock %}

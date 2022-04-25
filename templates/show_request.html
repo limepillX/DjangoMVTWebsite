@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ request.subject }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="p-3 shadow bg-light mx-5 mb-4 border border-3" style="border-radius: 25px">
+            <p class="fs-2 mx-5 mb-0 pt-4">{{ request.subject }}</p>
+            <p class="fw-lighter fst-italic ms-5 ps-3 text-muted mb-0">{{ request.time_create }}</p>
+            <p class="fw-lighter fst-italic ms-5 ps-3 text-muted fs-5">От: {{ request.author }}</p>
+            <p class="fst-italic ms-5 ps-5 text-muted fs-4">{{ request.description }}</p>
+            <p class="fst-italic ms-5 ps-5 fs-4">Статус:
+                <nobr class="text-warning">{{ request.status }}</nobr>
+            </p>
+            {% if user.is_superuser %}
+            <a href="{% url 'all_request' 'all' %}" type="button" class="ms-5 btn btn-outline-primary">Назад</a>
+            <form style="display: inline" action="{% url 'edit' request.pk %}" method="get">
+                <input type="submit" value="Изменить статус" class="ms-3 btn btn-outline-secondary">
+            </form>
+            <a href="{% url 'answer' request.pk %}" type="button" class="ms-3 btn btn-outline-secondary">Ответить</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

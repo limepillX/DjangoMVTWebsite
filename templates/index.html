@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ header }}
+{% endblock %}
+{% block content %}
+    <style>
+        .custom:not(:hover){
+            transition: .5s;
+            transform: scale(1);
+        }
+
+        .custom:hover,
+        .custom:focus {
+            transition: .5s;
+            transform: scale(1.05);
+        }
+    </style>
+    <div class="container-fluid pb-3">
+        <div class="d-grid gap-4" style="grid-template-columns: 1fr 4fr;">
+            <div class="rounded-3">
+                <h3 class="m-3 border-bottom"><i>Последние новости</i></h3>
+                {% for p in allnames %}
+                    <a href="{{ p.get_absolute_url }}" style="color: black"><p class="mx-4 my-3">{{ p.name }}</p></a>
+                {% endfor %}
+            </div>
+            <div class="bg-light border rounded-3 shadow">
+                <h2 class="b-5 me-5 border-bottom d-flex flex-row-reverse"><i class="my-3">Все новости</i></h2>
+                {% for p in posts %}
+                    <a class="mx-4 my-3 fs-4" style="text-decoration: none; color: black"
+                       href="{{ p.get_absolute_url }}">{{ p.name }}</a>
+
+                    <div class="d-grid gap-5" style="grid-template-columns: 1fr 3fr;">
+                        <div>
+                            <a href="{{ p.get_absolute_url }}">
+                                <img class="img-thumbnail ms-3 shadow custom" src="{{ p.Photo.url }}"
+                                     alt="Фото">
+                            </a>
+                        </div>
+                        <div>
+                            <h5 class="mt-4 fw-light">{{ p.description|truncatewords:50 }}</h5>
+                            <div class="d-flex flex-row-reverse mt-5">
+                                <a type="button" class="custom btn btn-outline-danger m-3 mb-0 d-flex fs-5"
+                                   href="{{ p.get_absolute_url }}">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mx-4">
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

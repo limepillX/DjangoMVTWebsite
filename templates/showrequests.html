@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ header }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% for r in requests %}
+            {% if super == 1 or user.is_superuser == True %}
+            <div class="p-3 shadow bg-light mx-5 mb-4 border border-3" style="border-radius: 25px">
+            {% if r.answeron.subject %}
+                <p class="fs-2 mx-5 mb-0 pt-4">Ответ на: <a style="color: gray; text-decoration: none" href="{{ r.answeron.get_absolute_url }}">{{ r.answeron.subject }}</a></p>
+
+            {% endif %}
+                <p class="fs-2 mx-5 mb-0 pt-4">{{ r.subject }}</p>
+                <p class="fw-lighter fst-italic ms-5 ps-3 text-muted mb-0">{{ r.time_create }}</p>
+                <p class="fw-lighter fst-italic ms-5 ps-3 text-muted fs-5">От: {{ r.author }}</p>
+            {% if r.answeron.description %}
+            <p class="fst-italic ms-5 ps-5 text-muted"><small>"{{ r.answeron.description|truncatewords:15 }}"</small></p>
+            {% endif %}
+                <p class="fst-italic ms-4 ps-5 text-muted fs-4">{{ r.description }}</p>
+            {% if r.status %}
+                <p class="fst-italic ms-5 ps-5 fs-4">Статус:
+                    {% if r.status.name == 'Принято' %}
+                        <nobr style="color: limegreen">{{ r.status }}</nobr>
+                    {% elif r.status.name == 'Обрабатывается' %}
+                        <nobr style="color: blueviolet">{{ r.status }}</nobr>
+                    {% elif r.status.name == 'Отклонено' %}
+                        <nobr style="color: red">{{ r.status }}</nobr>
+                    {% else %}
+                        <nobr style="color: orange">{{ r.status }}</nobr>
+                    {% endif %}
+                </p>
+            {% endif %}
+            {% if user.is_superuser %}
+                <a href="{{ r.get_absolute_url }}" type="button"
+                   class="ms-5 btn btn-outline-secondary">Просмотреть</a>
+            {% endif %}
+            </div>
+            {% endif %}
+        {% empty %}
+            <h1>Обращений не найдено!</h1>
+        {% endfor %}
+    </div>
+{% endblock %}
