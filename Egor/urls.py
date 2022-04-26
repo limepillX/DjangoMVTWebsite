@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls.static import static
 from gosduma.views import *
 
@@ -7,6 +7,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('about', about_us, name='about'),
+    path('mustbelogined', mustbelogined, name='mustbelogined'),
+    path('social-auth/', include('social_django.urls', namespace="social")),
 
     path('posts/<int:post_id>', showpost, name='posts'),
     path('posts/add_new', add_post, name='addnewpost'),

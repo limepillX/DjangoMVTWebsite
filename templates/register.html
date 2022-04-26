@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    <div class="alert alert-success shadow mx-auto">
-        <h1 class="fst-italic fw-lighter">{{ header }}</h1>
+    <h1 class="d-flex justify-content-center fst-italic fw-lighter">{{ header }}</h1>
+    <div class="d-flex justify-content-center">
         <form method="post">
             {% csrf_token %}
             <div class="form-error"> {{ form.non_field_errors }}</div>
@@ -17,13 +17,15 @@
                 <div>{{ p.errors }}</div>
             {% endfor %}
             <div class='homebutton'>
-                <div class="ms-5">
+                <div class="d-flex justify-content-center">
                     <p>
-                        <button class="btn btn-primary shadow mt-3" style="margin-left: 13%; width: 100px; font-size: 23px"
-                                type="submit">Вход
+                        <button class="btn btn-primary shadow mt-3 fs-4"
+                                type="submit">Войти
                         </button>
                 </div>
             </div>
         </form>
     </div>
+    <a class="d-flex justify-content-center" href="{% url 'social:begin' 'facebook' %}">Войти через Facebook</a>
+    <a class="d-flex justify-content-center" href="{% url 'social:begin' 'instagram' %}">Войти через Инсту</a>
 {% endblock %}

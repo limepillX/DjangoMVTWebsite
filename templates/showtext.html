@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="d-flex justify-content-center fst-italic fw-lighter mb-5">
+        <h3>{{ text }}</h3>
+    </div>
+    <div class="d-flex justify-content-center fst-italic fw-lighter mb-5">
+        <a class="btn btn-primary shadow fw-light mt-4 fs-4" href="{% url 'login' %}">
+            Войти
+        </a>
+    </div>
+{% endblock %}

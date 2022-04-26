@@ -40,8 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.linkedin.LinkedinOAuth2',
+    'social_core.backends.instagram.InstagramOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.instagram.InstagramOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -66,6 +74,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -117,7 +127,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-   os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "static"),
 ]
 
 # Default primary key field type
@@ -127,5 +137,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 LOGIN_URL = 'mustbelogined'
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
 
+SOCIAL_AUTH_FACEBOOK_KEY = '368979595169476'
+SOCIAL_AUTH_FACEBOOK_SECRET = '1bb480f82425b282b354b61746e4aea5'
 
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link'] # add this
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {       # add this
+  'fields': 'id, name, email, picture.type(large), link'
+}
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [                 # add this
+    ('name', 'name'),
+    ('email', 'email'),
+    ('picture', 'picture'),
+    ('link', 'profile_url'),
+]
+
+SOCIAL_AUTH_INSTAGRAM_KEY = '666835371044732'         #Client ID
+SOCIAL_AUTH_INSTAGRAM_SECRET = 'cb1042835e94112a4aed18e07f1a65a6'  #Client SECRET
+SOCIAL_AUTH_INSTAGRAM_EXTRA_DATA = [('user', 'user'),
+]

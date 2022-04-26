@@ -69,3 +69,4 @@ class Statuses(models.Model):
         verbose_name = 'статус'
         verbose_name_plural = 'статусы'
         ordering = ['-id']
+

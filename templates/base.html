@@ -25,7 +25,7 @@
 </head> <!-- Подключение нужных библиотек -->
 
 <body>
-<header class="p-2 mb-3 border-bottom shadow sticky-top" style="background-color: whitesmoke">
+<header class="p-2 mb-3 border-bottom shadow sticky-top mw-100" style="background-color: whitesmoke">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
@@ -36,7 +36,12 @@
                     <li><a class="nav-link px-2 link-dark text-muted">Ответы на обращения</a></li>
                 {% else %}
                     <li><a href="{% url 'all_request' 'my' %}" class="nav-link px-2 link-dark">Мои обращения</a></li>
-                    <li><a href="{% url 'my_answers' %}" class="nav-link px-2 link-dark">Ответы на обращения</a>
+                    <li><a href="{% url 'my_answers' %}" class="nav-link px-2 link-dark">Ответы на обращения
+                        {% if user|getamountmessages != 0 %}
+                            <sup class="alert alert-light rounded-pill px-2"
+                                 style="padding: 1.5px; background-color: orange">{{ user|getamountmessages }}</sup>
+                        {% endif %}
+                    </a>
                     </li>
                 {% endif %}
                 <li><a href="{% url 'about' %}" class="nav-link px-2 link-dark">О нас/FAQ</a></li>
@@ -50,7 +55,19 @@
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                    data-bs-toggle="dropdown" aria-expanded="false">
                     {% if user.is_authenticated %}
+
+                        {% for ass in backends.associated %}
+                            {% if ass.provider == 'facebook' %}
+                                <nobr class="me-2">
+                                    <i>{{ user.username }} ({{ ass.provider }})</i>
+                                </nobr>
+                            {% elif ass.provider == 'instagram' %}
+                                <i>{{ ass.extra_data.user.full_name }}({{ ass.provider }})</i>
+                            {% endif %}
+                        {% endfor %}
+
                         {% if user.is_superuser %}
+
                             <img src="{% static 'admin.png' %}" alt="mdo" width="32" height="32"
                                  class="rounded-circle shadow">
                             </a>
@@ -65,8 +82,15 @@
                                 <li><a class="dropdown-item" href="{% url 'logout' %}">Выйти</a></li>
                             </ul>
                         {% else %}
-                            <img src="{% static 'user.png' %}" alt="mdo" width="32" height="32"
-                                 class="rounded-circle shadow">
+
+                            {% for ass in backends.associated %}
+                                {% if ass.provider == 'facebook' %}
+                                    <img src="{{ ass.extra_data.picture.data.url }}" alt="mdo" width="32"
+                                         height="32"
+                                         class="rounded-circle shadow">
+                                {% endif %}
+                            {% endfor %}
+
                             </a>
                             <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                                 <li><a href="{% url 'addnewrequest' %}" class="dropdown-item">Создать обращение</a></li>

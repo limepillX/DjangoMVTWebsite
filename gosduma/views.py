@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
+from django.http import HttpResponse
 from django.template.defaulttags import register
 from django.shortcuts import render, redirect
 from datetime import datetime
@@ -10,6 +11,17 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 
 from .forms import *
+
+
+@register.filter
+def getamountmessages(user):
+    print(user)
+    a = RequestAnswer.objects.filter(answeron__author=user)
+    print(a)
+    b = 0
+    for i in a:
+        b += 1
+    return b
 
 
 @register.filter
@@ -25,6 +37,20 @@ def get_time(value):
 
 
 def index(request):
+    if request.user.is_authenticated:
+        a = request.user.social_auth.all()
+        for i in a:
+            if i.provider == 'facebook':
+                name = i.extra_data['name']
+                user = User.objects.get(username=request.user)
+                user.username = name
+                user.save()
+            elif i.provider == 'instagram':
+                name = i.extra_data['user']['full_name']
+                print(name)
+                user = User.objects.get(username=request.user)
+                user.username = name
+                user.save()
     allposts = Posts.objects.all()
     allnames = Posts.objects.all()[:5]
     return render(request, 'index.html', {'header': 'Главная', 'posts': allposts, 'allnames': allnames})
@@ -132,6 +158,10 @@ class LoginUser(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('index')
+
+
+def mustbelogined(request):
+    return render(request, 'showtext.html', {'text': 'Вы должны войти, чтобы сделать это действие!'})
 
 
 @login_required
