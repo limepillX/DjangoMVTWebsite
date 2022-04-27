@@ -173,5 +173,5 @@ SOCIAL_AUTH_VK_OAUTH2_KEY = '8151149'
 SOCIAL_AUTH_VK_OAUTH2_SECRET = 'TyxrXiKz2Zch4LbjH0XQ'
 
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email', 'last_name']
-SOCIAL_AUTH_VK_OAUTH2_EXTRA_DATA = ['email', 'last_name']
+SOCIAL_AUTH_VK_OAUTH2_EXTRA_DATA = ['email', 'last_name', 'first_name', 'photo']
 django_on_heroku.settings(locals())

@@ -80,9 +80,12 @@
                                     <img src="{{ ass.extra_data.picture.data.url }}" alt="mdo" width="32"
                                          height="32"
                                          class="rounded-circle shadow">
-                                    {% elif ass.provider == 'google-oauth2' %}
+                                {% elif ass.provider == 'google-oauth2' %}
                                     <img src="{% static 'google.png' %}" alt="mdo" width="32" height="32"
-                             class="rounded-circle shadow">
+                                         class="rounded-circle shadow">
+                                {% elif ass.provider == 'vk-oauth2' %}
+                                    <img src="{{ ass.extra_data.photo }}" alt="mdo" width="32" height="32"
+                                         class="rounded-circle shadow">
                                 {% endif %}
                             {% endfor %}
                             </a>

@@ -45,15 +45,13 @@ def index(request):
                 user = User.objects.get(username=request.user)
                 user.username = name + str(f" (Facebook)")
                 user.save()
-            elif i.provider == 'instagram':
-                name = i.extra_data['user']['full_name']
-                print(name)
-                user = User.objects.get(username=request.user)
-                user.username = name + str(f" (Instagram)")
-                user.save()
             elif i.provider == 'google-oauth2':
                 user = User.objects.get(username=request.user)
                 user.username = request.user.first_name + str(f" (Google+)")
+                user.save()
+            elif i.provider == 'vk-oauth2':
+                user = User.objects.get(username=request.user)
+                user.username =  request.user.first_name + ' ' + request.user.last_name + str(f" (VK)")
                 user.save()
     allposts = Posts.objects.all()
     allnames = Posts.objects.all()[:5]
