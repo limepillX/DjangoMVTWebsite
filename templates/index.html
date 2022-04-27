@@ -30,15 +30,15 @@
                     <a class="mx-4 my-3 fs-4" style="text-decoration: none; color: black"
                        href="{{ p.get_absolute_url }}">{{ p.name }}</a>
 
-                    <div class="d-grid gap-5" style="grid-template-columns: 1fr 3fr;">
+                    <div class="d-grid gap-5" style="">
                         <div>
                             <a href="{{ p.get_absolute_url }}">
-                                <img class="img-thumbnail ms-3 shadow custom" src="{{ p.Photo.url }}"
-                                     alt="Фото">
+                                <img class="img-thumbnail ms-2 shadow custom w-50" src="{{ p.Photo.url }}"
+                                     alt="Фото" style="max-width: 400px">
                             </a>
                         </div>
                         <div>
-                            <h5 class="mt-4 fw-light me-4">{{ p.description|truncatewords:50 }}</h5>
+                            <h5 class="fw-light me-4">{{ p.description|truncatewords:50 }}</h5>
                             <div class="d-flex flex-row-reverse mt-5">
                                 <a type="button" class="custom btn btn-outline-danger m-3 mb-0 d-flex fs-5"
                                    href="{{ p.get_absolute_url }}">Подробнее</a>
