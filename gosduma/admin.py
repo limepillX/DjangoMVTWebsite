@@ -4,21 +4,21 @@ from .models import *
 
 # Register your models here.
 class ReqestAdmin(admin.ModelAdmin):
-    list_display = ('subject', 'description', 'status', 'time_create', 'time_update', 'author')
-    list_display_links = ('subject', 'description', 'status', 'time_create', 'time_update', 'author')
-    search_fields = ('subject', 'description', 'status', 'time_create', 'time_update', 'author')
+    list_display = ('subject', 'status', 'time_create', 'time_update', 'author')
+    list_display_links = ('subject', 'status', 'time_create', 'time_update', 'author')
+    search_fields = ('subject', 'status', 'time_create', 'time_update', 'author')
 
 
 class AnswerAdmin(admin.ModelAdmin):
-    list_display = ('answeron', 'description', 'time_create', 'author')
-    list_display_links = ('answeron', 'description', 'time_create', 'author')
-    search_fields = ('answeron', 'description', 'time_create', 'author')
+    list_display = ('answeron', 'time_create', 'author')
+    list_display_links = ('answeron', 'time_create', 'author')
+    search_fields = ('answeron', 'time_create', 'author')
 
 
 class PostsAdmin(admin.ModelAdmin):
-    list_display = ('name', 'Photo', 'description', 'author')
-    list_display_links = ('name', 'Photo', 'description', 'author')
-    search_fields = ('name', 'Photo', 'description', 'author')
+    list_display = ('name', 'Photo', 'author')
+    list_display_links = ('name', 'Photo', 'author')
+    search_fields = ('name', 'Photo', 'author')
 
 
 class StatusesAdmin(admin.ModelAdmin):
