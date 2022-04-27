@@ -161,8 +161,7 @@ SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [  # add this
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'https://igrodjangogo.herokuapp.com/'
 SOCIAL_AUTH_INSTAGRAM_KEY = '666835371044732'  # Client ID
 SOCIAL_AUTH_INSTAGRAM_SECRET = 'cb1042835e94112a4aed18e07f1a65a6'  # Client SECRET
-SOCIAL_AUTH_INSTAGRAM_EXTRA_DATA = [('user', 'user'),
-                                    ]
+SOCIAL_AUTH_INSTAGRAM_EXTRA_DATA = [('user', 'user')]
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '505313344786-55v1la41annrefbp41v3fbrntpumdlem.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
