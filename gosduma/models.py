@@ -6,7 +6,7 @@ from django.urls import reverse
 class Request(models.Model):
     subject = models.CharField(max_length=255, verbose_name='Тема')
     description = models.TextField(blank=True, verbose_name='Описание')
-    status = models.ForeignKey('Statuses', on_delete=models.PROTECT, verbose_name='Статус', default=2)
+    status = models.ForeignKey('Statuses', on_delete=models.PROTECT, verbose_name='Статус', default=1)
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Время последнего обновления')
     author = models.CharField(max_length=255)
