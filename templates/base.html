@@ -21,7 +21,15 @@
 </head> <!-- Подключение нужных библиотек -->
 
 <body>
-<header class="p-2 mb-3 border-bottom shadow mw-100" style="background-color: whitesmoke">
+<script>
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        document.write(`<header class="p-2 mb-3 border-bottom shadow mw-100" style="background-color: whitesmoke">`);
+        } else {
+        document.write(`<header class="p-2 mb-3 border-bottom shadow mw-100 sticky-top" style="background-color: whitesmoke">`);
+    }
+</script>
+
+
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
@@ -120,9 +128,14 @@
 <div class="d-flex justify-content-center">
     <img rel="shortcut icon" src="{% static 'gerb.png' %}" alt="Герб" style="height: 75px">
 </div>
-
-<h3 class="d-flex justify-content-center">Сайт депутата мосгордумы&nbsp;<i>Василия Пупкина</i></h3>
-
+<script>
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        document.write(`<h3 class="d-flex justify-content-center">Сайт депутата мосгордумы</h3>`);
+         document.write(`<h3 class="d-flex justify-content-center"><i>Василия Пупкина</i></h3>`);
+        } else {
+        document.write(`<h3 class="d-flex justify-content-center">Сайт депутата мосгордумы&nbsp;<i>Василия Пупкина</i></h3>`);
+    }
+</script>
 <div class="d-flex justify-content-between">
     <div class="ms-4"><img src="{% static 'date.png' %}" style="height: 25px"
                            alt="Дата"><a>Сегодня: {{ a|get_date }}</a></div>

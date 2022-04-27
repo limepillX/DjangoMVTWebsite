@@ -21,7 +21,7 @@
             {% endif %}
                 <p class="fst-italic ms-4 ps-5 text-muted fs-4">{{ r.description }}</p>
             {% if r.status %}
-                <p class="fst-italic ms-5 ps-5 fs-4">Статус:
+                <p class="fst-italic mx-3 px-3 fs-4">Статус:
                     {% if r.status.name == 'Принято' %}
                         <nobr style="color: limegreen">{{ r.status }}</nobr>
                     {% elif r.status.name == 'Обрабатывается' %}
