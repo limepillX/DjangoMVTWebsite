@@ -47,10 +47,10 @@ INSTALLED_APPS = [
 
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.linkedin.LinkedinOAuth2',
-    'social_core.backends.instagram.InstagramOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.instagram.InstagramOAuth2',
     'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.vk.VKOAuth2',  # бекенд авторизации через ВКонтакте
     'django.contrib.auth.backends.ModelBackend',
 ]
 MIDDLEWARE = [
@@ -167,7 +167,11 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '505313344786-55v1la41annrefbp41v3fbrntpumdlem.a
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email',
                                    'https://www.googleapis.com/auth/userinfo.profile']  # add this
-SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = [('user', 'https://www.googleapis.com/auth/userinfo.profile'),
-                                        ]
+SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = [('user', 'https://www.googleapis.com/auth/userinfo.profile')]
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = '8151149'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'TyxrXiKz2Zch4LbjH0XQ'
+
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 
 django_on_heroku.settings(locals())
