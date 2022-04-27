@@ -8,9 +8,9 @@
     <div class="container">
         <div class="p-3 shadow bg-light mx-5 mb-4 border border-3" style="border-radius: 25px">
             <p class="fs-2 mx-5 mb-0 pt-4">{{ request.subject }}</p>
-            <p class="fw-lighter fst-italic ms-5 ps-3 text-muted mb-0">{{ request.time_create }}</p>
-            <p class="fw-lighter fst-italic ms-5 ps-3 text-muted fs-5">От: {{ request.author }}</p>
-            <p class="fst-italic ms-5 ps-5 text-muted fs-4">{{ request.description }}</p>
+            <p class="fw-lighter fst-italic mx-5 px-3 text-muted mb-0">{{ request.time_create }}</p>
+            <p class="fw-lighter fst-italic mx-5 px-3 text-muted fs-5">От: {{ request.author }}</p>
+            <p class="fst-italic mx-5 px-5 text-muted fs-4">{{ request.description }}</p>
             {% if r.status %}
                 <p class="fst-italic mx-3 px-3 fs-4">Статус:
                     {% if r.status.name == 'Принято' %}
