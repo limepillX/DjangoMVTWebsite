@@ -172,6 +172,6 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = [('user', 'https://www.googleapis.com/aut
 SOCIAL_AUTH_VK_OAUTH2_KEY = '8151149'
 SOCIAL_AUTH_VK_OAUTH2_SECRET = 'TyxrXiKz2Zch4LbjH0XQ'
 
-SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
-
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email', 'last_name']
+SOCIAL_AUTH_VK_OAUTH2_EXTRA_DATA = ['email', 'last_name']
 django_on_heroku.settings(locals())
