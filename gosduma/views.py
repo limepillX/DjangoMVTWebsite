@@ -51,11 +51,12 @@ def index(request):
                 user.save()
             elif i.provider == 'vk-oauth2':
                 user = User.objects.get(username=request.user)
-                user.username =  request.user.first_name + ' ' + request.user.last_name + str(f" (VK)")
+                user.username = request.user.first_name + ' ' + request.user.last_name + str(f" (VK)")
                 user.save()
     allposts = Posts.objects.all()
     allnames = Posts.objects.all()[:5]
-    return render(request, 'index.html', {'header': 'Главная', 'posts': allposts, 'allnames': allnames})
+    return render(request, 'index.html',
+                  {'header': 'Сайт депутата мосгордумы Василия Пупкина', 'posts': allposts, 'allnames': allnames})
 
 
 def about_us(request):
