@@ -1,3 +1,5 @@
+import django_on_heroku
+
 """
 Django settings for Egor project.
 
@@ -27,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
-    'https://1a45-146-120-13-172.ngrok.io',
+    'https://djangooegor.herokuapp.com/',
 ]
 
 # Application definition
@@ -59,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'Egor.urls'
@@ -145,24 +148,27 @@ LOGOUT_REDIRECT_URL = 'login'
 SOCIAL_AUTH_FACEBOOK_KEY = '368979595169476'
 SOCIAL_AUTH_FACEBOOK_SECRET = '1bb480f82425b282b354b61746e4aea5'
 
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link'] # add this
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {       # add this
-  'fields': 'id, name, email, picture.type(large), link'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link']  # add this
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {  # add this
+    'fields': 'id, name, email, picture.type(large), link'
 }
-SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [                 # add this
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [  # add this
     ('name', 'name'),
     ('email', 'email'),
     ('picture', 'picture'),
     ('link', 'profile_url'),
 ]
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'http://localhost:8000/login'
-SOCIAL_AUTH_INSTAGRAM_KEY = '666835371044732'         #Client ID
-SOCIAL_AUTH_INSTAGRAM_SECRET = 'cb1042835e94112a4aed18e07f1a65a6'  #Client SECRET
+SOCIAL_AUTH_INSTAGRAM_KEY = '666835371044732'  # Client ID
+SOCIAL_AUTH_INSTAGRAM_SECRET = 'cb1042835e94112a4aed18e07f1a65a6'  # Client SECRET
 SOCIAL_AUTH_INSTAGRAM_EXTRA_DATA = [('user', 'user'),
-]
+                                    ]
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '505313344786-55v1la41annrefbp41v3fbrntpumdlem.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile'] # add this
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email',
+                                   'https://www.googleapis.com/auth/userinfo.profile']  # add this
 SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = [('user', 'https://www.googleapis.com/auth/userinfo.profile'),
-]
+                                        ]
+
+django_on_heroku.settings(locals())
