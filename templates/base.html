@@ -56,15 +56,7 @@
                    data-bs-toggle="dropdown" aria-expanded="false">
                     {% if user.is_authenticated %}
 
-                        {% for ass in backends.associated %}
-                            {% if ass.provider == 'facebook' %}
-                                <nobr class="me-2">
-                                    <i>{{ user.username }} ({{ ass.provider }})</i>
-                                </nobr>
-                            {% elif ass.provider == 'instagram' %}
-                                <i>{{ ass.extra_data.user.full_name }}({{ ass.provider }})</i>
-                            {% endif %}
-                        {% endfor %}
+                        <i>{{ user.username }}</i>
 
                         {% if user.is_superuser %}
 
@@ -88,9 +80,11 @@
                                     <img src="{{ ass.extra_data.picture.data.url }}" alt="mdo" width="32"
                                          height="32"
                                          class="rounded-circle shadow">
+                                    {% elif ass.provider == 'google-oauth2' %}
+                                    <img src="{% static 'google.png' %}" alt="mdo" width="32" height="32"
+                             class="rounded-circle shadow">
                                 {% endif %}
                             {% endfor %}
-
                             </a>
                             <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                                 <li><a href="{% url 'addnewrequest' %}" class="dropdown-item">Создать обращение</a></li>

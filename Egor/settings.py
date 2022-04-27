@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
-    'http://1a45-146-120-13-172.ngrok.io',
+    'https://1a45-146-120-13-172.ngrok.io',
 ]
 
 # Application definition
@@ -48,6 +48,7 @@ AUTHENTICATION_BACKENDS = [
     'social_core.backends.instagram.InstagramOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.instagram.InstagramOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
 MIDDLEWARE = [
@@ -154,8 +155,14 @@ SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [                 # add this
     ('picture', 'picture'),
     ('link', 'profile_url'),
 ]
-
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'http://localhost:8000/login'
 SOCIAL_AUTH_INSTAGRAM_KEY = '666835371044732'         #Client ID
 SOCIAL_AUTH_INSTAGRAM_SECRET = 'cb1042835e94112a4aed18e07f1a65a6'  #Client SECRET
 SOCIAL_AUTH_INSTAGRAM_EXTRA_DATA = [('user', 'user'),
+]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '505313344786-55v1la41annrefbp41v3fbrntpumdlem.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile'] # add this
+SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = [('user', 'https://www.googleapis.com/auth/userinfo.profile'),
 ]
