@@ -19,7 +19,7 @@
             {% if r.answeron.description %}
             <p class="fst-italic mx-5 px-5 text-muted"><small>"{{ r.answeron.description|truncatewords:15 }}"</small></p>
             {% endif %}
-                <p class="fst-italic mx-4 px-5 text-muted fs-4">{{ r.description }}</p>
+                <p class="fst-italic mx-4 px-5 text-muted fs-5">{{ r.description|truncatewords:15 }}</p>
             {% if r.status %}
                 <p class="fst-italic mx-3 px-3 fs-4">Статус:
                     {% if r.status.name == 'Принято' %}
@@ -33,10 +33,8 @@
                     {% endif %}
                 </p>
             {% endif %}
-            {% if user.is_superuser %}
                 <a href="{{ r.get_absolute_url }}" type="button"
                    class="ms-5 btn btn-outline-secondary">Просмотреть</a>
-            {% endif %}
             </div>
             {% endif %}
         {% empty %}

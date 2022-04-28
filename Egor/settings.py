@@ -158,7 +158,7 @@ SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [  # add this
     ('picture', 'picture'),
     ('link', 'profile_url'),
 ]
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'https://justacold.herokuapp.com'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'https://justacold.herokuapp.com/'
 SOCIAL_AUTH_INSTAGRAM_KEY = '666835371044732'  # Client ID
 SOCIAL_AUTH_INSTAGRAM_SECRET = 'cb1042835e94112a4aed18e07f1a65a6'  # Client SECRET
 SOCIAL_AUTH_INSTAGRAM_EXTRA_DATA = [('user', 'user')]
