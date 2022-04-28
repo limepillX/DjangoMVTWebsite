@@ -27,6 +27,13 @@ class StatusesAdmin(admin.ModelAdmin):
     search_fields = ('name', 'author')
 
 
+class LogsAdmin(admin.ModelAdmin):
+    list_display = ('date', 'author', 'log')
+    list_display_links = ('date', 'author', 'log')
+    search_fields = ('date', 'author', 'log')
+
+
+admin.site.register(Logs, LogsAdmin)
 admin.site.register(Posts, PostsAdmin)
 admin.site.register(RequestAnswer, AnswerAdmin)
 admin.site.register(Request, ReqestAdmin)

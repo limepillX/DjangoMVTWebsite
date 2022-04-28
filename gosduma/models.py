@@ -39,7 +39,7 @@ class RequestAnswer(models.Model):
 class Posts(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название')
     Photo = models.ImageField(upload_to="photos/posts/", verbose_name='Фото', null=True, blank=True,
-                              default="media/notfoundwidth.png")
+                              default="notfoundwidth.png")
     Video = models.CharField(max_length=1000, blank=True, verbose_name='Видео (не обязательно)')
     description = models.TextField(blank=True, verbose_name='Описание')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
@@ -70,3 +70,13 @@ class Statuses(models.Model):
         verbose_name_plural = 'статусы'
         ordering = ['-id']
 
+
+class Logs(models.Model):
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Время')
+    author = models.CharField(max_length=255, verbose_name='Кто')
+    log = models.CharField(max_length=255, verbose_name='Что сделал')
+
+    class Meta:
+        verbose_name = 'лог'
+        verbose_name_plural = 'логи'
+        ordering = ['-id']

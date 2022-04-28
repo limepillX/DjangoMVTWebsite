@@ -9,7 +9,7 @@ urlpatterns = [
     path('about', about_us, name='about'),
     path('mustbelogined', mustbelogined, name='mustbelogined'),
     path('social-auth/', include('social_django.urls', namespace="social")),
-
+    path('logs/', show_logs, name='logs'),
     path('posts/<int:post_id>', showpost, name='posts'),
     path('posts/add_new', add_post, name='addnewpost'),
 

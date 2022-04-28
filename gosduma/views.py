@@ -13,6 +13,27 @@ from django.views.generic import UpdateView
 from .forms import *
 
 
+def createlog(r, newlog):
+    if Logs.objects.all().count() > 100:
+        temp = Logs.objects.order_by('id')[:1]
+        temp[0].delete()
+    if Logs.objects.all():
+        last = Logs.objects.order_by('-id')[:1]
+        if newlog != last[0].log or r.user.username != last[0].author:
+            if r.user.is_authenticated:
+                Logs(author=f'{r.user.username}', log=newlog).save()
+            else:
+                Logs(author=f'Анонимный пользователь', log=newlog).save()
+    else:
+        Logs(author=f'System', log='Initial log').save()
+
+
+
+@login_required
+def show_logs(request):
+    return render(request, 'Showlogs.html', {'header': 'Логи', 'logs': Logs.objects.all()})
+
+
 @register.filter
 def getamountmessages(user):
     print(user)
@@ -37,6 +58,7 @@ def get_time(value):
 
 
 def index(request):
+    createlog(request, 'Посетил главную страницу')
     if request.user.is_authenticated:
         a = request.user.social_auth.all()
         for i in a:
@@ -60,15 +82,19 @@ def index(request):
 
 
 def about_us(request):
+    createlog(request, 'Посетил страницу \'О нас\'')
     return render(request, 'about.html', {'header': 'О нас'})
 
 
 @login_required
 def add_post(request):
+    createlog(request, 'Посетил страницу \'Добавить новость\'')
     if request.method == 'POST':
         form = AddPostForm(request.POST, request.FILES)
         if form.is_valid():
+            createlog(request, f'Создал новость')
             form.save()
+
             return redirect('index')
     else:
         form = AddPostForm(initial={'author': request.user.username})
@@ -82,9 +108,11 @@ def add_post(request):
 @login_required
 def add_request(request):
     if request.method == 'POST':
+        createlog(request, 'Посетил страницу \'Добавить запрос\'')
         form = AddRequestForm(request.POST)
         if form.is_valid():
             form.save()
+            createlog(request, f'Создал обращение {form.subject}')
             return redirect('index')
     else:
         form = AddRequestForm(initial={'author': request.user.username, 'recipient': 1})
@@ -97,15 +125,18 @@ def add_request(request):
 
 def showpost(request, post_id):
     post = Posts.objects.get(pk=post_id)
+    createlog(request, f'Посмотрел пост \' {post.name} \'')
     return render(request, 'showpost.html', {'post': post})
 
 
 @login_required
 def show_requests(request, typee):
     if typee == 'my':
+        createlog(request, 'Посетил страницу \'Мои запросы\'')
         all_requests = Request.objects.filter(author=request.user)
         superus = 1
     else:
+        createlog(request, 'Посетил страницу \'Все запросы\'')
         all_requests = Request.objects.all()
         superus = 0
     return render(request, 'showrequests.html', {'header': 'Обращения', 'requests': all_requests, 'super': superus})
@@ -114,18 +145,22 @@ def show_requests(request, typee):
 @login_required
 def show_request(request, req_id):
     req = Request.objects.get(pk=req_id)
+    createlog(request, f'Посмотрел запрос \'{req.subject}\'')
     return render(request, 'show_request.html', {'request': req})
 
 
 @login_required
 def answer(request, req_pk):
+    createlog(request, f'Посетил страницу \' Ответ на запрос \'')
+    answeron = Request.objects.get(pk=req_pk)
     if request.method == 'POST':
         form = AddAnswerForm(request.POST)
         if form.is_valid():
             form.save()
+            createlog(request, f'Ответил на форму \'{answeron.subject}\'')
             return redirect('all_request', 'all')
     else:
-        form = AddAnswerForm(initial={'author': request.user.username, 'answeron': Request.objects.get(pk=req_pk)})
+        form = AddAnswerForm(initial={'author': request.user.username, 'answeron': answeron})
     context = {
         'form': form,
         'header': 'Ответить'
@@ -135,6 +170,7 @@ def answer(request, req_pk):
 
 @login_required
 def my_answers(request):
+    createlog(request, f'Посетил страницу \' Мои ответы \'')
     req = RequestAnswer.objects.filter(answeron__author=request.user.username)
     return render(request, 'showrequests.html', {'header': 'Мои ответы', 'requests': req, 'super': 1})
 
@@ -169,5 +205,6 @@ def mustbelogined(request):
 
 @login_required
 def logout_user(request):
+    createlog(request, f'Вышел')
     logout(request)
     return redirect('index')

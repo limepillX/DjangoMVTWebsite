@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ header }}
+{% endblock %}
+{% block content %}
+    <div class="container">
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Дата</th>
+      <th scope="col">Кто</th>
+      <th scope="col">Что</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for l in logs %}
+    <tr>
+      <td>{{ l.date }}</td>
+      <td>{{ l.author }}</td>
+      <td>{{ l.log }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+    </div>
+{% endblock %}

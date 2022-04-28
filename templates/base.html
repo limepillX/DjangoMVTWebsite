@@ -38,6 +38,7 @@
                 {% if user.is_superuser %}
                     <li><a class="nav-link px-2 link-dark text-muted">Мои обращения</a></li>
                     <li><a class="nav-link px-2 link-dark text-muted">Ответы на обращения</a></li>
+                    <li><a class="nav-link px-2 link-dark" href="{% url 'logs' %}">Логи</a></li>
                 {% else %}
                     <li><a href="{% url 'all_request' 'my' %}" class="nav-link px-2 link-dark">Мои обращения</a></li>
                     <li><a href="{% url 'my_answers' %}" class="nav-link px-2 link-dark">Ответы на обращения
