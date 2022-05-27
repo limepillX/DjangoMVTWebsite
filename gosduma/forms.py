@@ -31,8 +31,10 @@ class AddAnswerForm(forms.ModelForm):
 class AddRequestForm(forms.ModelForm):
     class Meta:
         model = Request
-        fields = ['subject', 'description', 'recipient', 'author']
+        fields = ['subject','FIO', 'email', 'description', 'recipient', 'author', 'tag', 'file']
         widgets = {
-            'subject': forms.TextInput(attrs={'style': "font-size: 25px; width: 450px", 'class': "form-control"}),
+            'subject': forms.TextInput(attrs={'style': "font-size: 20px; width: 450px", 'class': "form-control"}),
+            'FIO': forms.TextInput(attrs={'style': "font-size: 20px; width: 450px", 'class': "form-control"}),
+            'email': forms.TextInput(attrs={'style': "font-size: 15px; width: 450px", 'class': "form-control"}),
             'description': forms.Textarea(attrs={'cols': 100, 'class': "form-control"}),
         }

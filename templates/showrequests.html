@@ -5,37 +5,49 @@
 {% endblock %}
 
 {% block content %}
+    {% if user.is_superuser == True %}
     <div class="container">
+        <form method="get" action="{% url 'all_request' 'all' %}" class="d-flex justify-content-center my-4">
+            <input name="s" value="{% if searchval %}{{ searchval }}{% endif %}" class="form-control w-50 fs-3" placeholder='Поиск (название, тэг)'>
+        </form>
+    {% endif %}
         {% for r in requests %}
             {% if super == 1 or user.is_superuser == True %}
-            <div class="p-3 shadow bg-light mx-5 mb-4 border border-3" style="border-radius: 25px">
-            {% if r.answeron.subject %}
-                <p class="fs-2 mx-5 mb-0 pt-4">Ответ на: <a style="color: gray; text-decoration: none" href="{{ r.answeron.get_absolute_url }}">{{ r.answeron.subject }}</a></p>
+                <div class="p-3 shadow bg-light mx-5 mb-4 border border-3" style="border-radius: 25px">
+                    {% if r.answeron.subject %}
+                        <p class="fs-2 mx-5 mb-0 pt-4">Ответ на: <a style="color: gray; text-decoration: none"
+                                                                    href="{{ r.answeron.get_absolute_url }}">{{ r.answeron.subject }}</a>
+                        </p>
 
-            {% endif %}
-                <p class="fs-2 mx-5 mb-0 pt-4">{{ r.subject }}</p>
-                <p class="fw-lighter fst-italic mx-5 px-3 text-muted mb-0">{{ r.time_create }}</p>
-                <p class="fw-lighter fst-italic mx-5 px-3 text-muted fs-5">От: {{ r.author }}</p>
-            {% if r.answeron.description %}
-            <p class="fst-italic mx-5 px-5 text-muted"><small>"{{ r.answeron.description|truncatewords:15 }}"</small></p>
-            {% endif %}
-                <p class="fst-italic mx-4 px-5 text-muted fs-5">{{ r.description|truncatewords:15 }}</p>
-            {% if r.status %}
-                <p class="fst-italic mx-3 px-3 fs-4">Статус:
-                    {% if r.status.name == 'Принято' %}
-                        <nobr style="color: limegreen">{{ r.status }}</nobr>
-                    {% elif r.status.name == 'Обрабатывается' %}
-                        <nobr style="color: blueviolet">{{ r.status }}</nobr>
-                    {% elif r.status.name == 'Отклонено' %}
-                        <nobr style="color: red">{{ r.status }}</nobr>
-                    {% else %}
-                        <nobr style="color: orange">{{ r.status }}</nobr>
                     {% endif %}
-                </p>
-            {% endif %}
-                <a href="{{ r.get_absolute_url }}" type="button"
-                   class="ms-5 btn btn-outline-secondary">Просмотреть</a>
-            </div>
+                    <p class="fs-2 mx-5 mb-0 pt-4">{{ r.subject }}</p>
+                    <p class="fw-lighter fst-italic mx-5 px-3 text-muted mb-0">{{ r.time_create }}</p>
+                    <p class="fw-lighter fst-italic mx-5 px-3 text-muted fs-5">От: {{ r.author }}</p>
+                    {% if r.answeron.description %}
+                        <p class="fst-italic mx-5 px-5 text-muted"><small>"{{ r.answeron.description|truncatewords:15 }}"</small>
+                        </p>
+                    {% endif %}
+                    <p class="fst-italic mx-4 px-5 text-muted fs-5">{{ r.description|truncatewords:15 }}</p>
+                    {% if r.status %}
+                        <p class="fst-italic mx-3 px-3 fs-4">Статус:
+                            {% if r.status.name == 'Принято' %}
+                                <nobr style="color: limegreen">{{ r.status }}</nobr>
+                            {% elif r.status.name == 'Обрабатывается' %}
+                                <nobr style="color: blueviolet">{{ r.status }}</nobr>
+                            {% elif r.status.name == 'Отклонено' %}
+                                <nobr style="color: red">{{ r.status }}</nobr>
+                            {% else %}
+                                <nobr style="color: orange">{{ r.status }}</nobr>
+                            {% endif %}
+                            <br>
+                            <nobr>Тэг:</nobr>
+                            <a href="{% url 'all_request' 'all' %}?s={{ r.tag.name }}" class="bg-warning border rounded-pill px-2"
+                                  style="color: whitesmoke">{{ r.tag.name }}</a>
+                        </p>
+                    {% endif %}
+                    <a href="{{ r.get_absolute_url }}" type="button"
+                       class="ms-5 btn btn-outline-secondary">Просмотреть</a>
+                </div>
             {% endif %}
         {% empty %}
             <h1>Обращений не найдено!</h1>

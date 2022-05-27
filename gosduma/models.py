@@ -3,12 +3,28 @@ from django.db import models
 from django.urls import reverse
 
 
+class Tags(models.Model):
+    name = models.CharField(max_length=255, verbose_name='Тэг сообщения')
+
+    class Meta:
+        verbose_name = 'тэг'
+        verbose_name_plural = 'тэги'
+        ordering = ['-id']
+
+    def __str__(self):
+        return self.name
+
+
 class Request(models.Model):
     subject = models.CharField(max_length=255, verbose_name='Тема')
+    email = models.EmailField(null=True, verbose_name='Почта для связи')
+    FIO = models.CharField(max_length=255, verbose_name='ФИО')
     description = models.TextField(blank=True, verbose_name='Описание')
-    status = models.ForeignKey('Statuses', on_delete=models.PROTECT, verbose_name='Статус', default=1)
+    file = models.FileField(upload_to ='files/', null=True, verbose_name='Приложение', blank=True)
+    status = models.ForeignKey('Statuses', on_delete=models.PROTECT, verbose_name='Статус', null=True)
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Время последнего обновления')
+    tag = models.ForeignKey('Tags', on_delete=models.CASCADE, verbose_name='Тэг', default=1)
     author = models.CharField(max_length=255)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Получатель')
 

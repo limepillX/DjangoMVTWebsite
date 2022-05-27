@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
+from django.db.models import Q
 from django.http import HttpResponse
 from django.template.defaulttags import register
 from django.shortcuts import render, redirect
@@ -28,10 +29,26 @@ def createlog(r, newlog):
         Logs(author=f'System', log='Initial log').save()
 
 
-
 @login_required
 def show_logs(request):
     return render(request, 'Showlogs.html', {'header': 'Логи', 'logs': Logs.objects.all()})
+
+
+@register.filter
+def normalfile(value):
+    name = ''
+    flag = False
+    for i in range(len(value)):
+        if flag:
+            name += value[i]
+        if value[i] == '/':
+            flag = True
+    return name
+
+
+@register.filter
+def getmb(value):
+    return round(((value / 1024) / 1024), 2)
 
 
 @register.filter
@@ -109,13 +126,18 @@ def add_post(request):
 def add_request(request):
     if request.method == 'POST':
         createlog(request, 'Посетил страницу \'Добавить запрос\'')
-        form = AddRequestForm(request.POST)
+        form = AddRequestForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            createlog(request, f'Создал обращение {form.subject}')
+            createlog(request, f'Создал обращение')
             return redirect('index')
     else:
-        form = AddRequestForm(initial={'author': request.user.username, 'recipient': 1})
+        form = AddRequestForm(initial={
+            'author': request.user.username,
+            'recipient': 1,
+            'email':request.user.email,
+            'FIO': f'{request.user.first_name} {request.user.last_name}'
+        })
     context = {
         'form': form,
         'header': 'Добавить запрос'
@@ -131,15 +153,22 @@ def showpost(request, post_id):
 
 @login_required
 def show_requests(request, typee):
+    svalue = 'None'
     if typee == 'my':
         createlog(request, 'Посетил страницу \'Мои запросы\'')
         all_requests = Request.objects.filter(author=request.user)
         superus = 1
     else:
         createlog(request, 'Посетил страницу \'Все запросы\'')
-        all_requests = Request.objects.all()
+        query = request.GET.get('s')
+        svalue = query
+        if query:
+            all_requests = Request.objects.filter(Q(subject__contains=query) | Q(tag__name__contains=query))
+        else:
+            all_requests = Request.objects.all()
         superus = 0
-    return render(request, 'showrequests.html', {'header': 'Обращения', 'requests': all_requests, 'super': superus})
+    return render(request, 'showrequests.html',
+                  {'searchval': svalue, 'header': 'Обращения', 'requests': all_requests, 'super': superus})
 
 
 @login_required
@@ -157,13 +186,15 @@ def answer(request, req_pk):
         form = AddAnswerForm(request.POST)
         if form.is_valid():
             form.save()
-            createlog(request, f'Ответил на форму \'{answeron.subject}\'')
+            createlog(request, f'Ответил на запрос \'{answeron.subject}\'')
             return redirect('all_request', 'all')
     else:
         form = AddAnswerForm(initial={'author': request.user.username, 'answeron': answeron})
     context = {
+        'answeron': answeron,
         'form': form,
-        'header': 'Ответить'
+        'header': 'Ответить',
+        'type': 'answer'
     }
     return render(request, 'add_post.html', context=context)
 

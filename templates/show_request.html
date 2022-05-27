@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     {{ request.subject }}
@@ -10,7 +11,16 @@
             <p class="fs-2 mx-5 mb-0 pt-4">{{ request.subject }}</p>
             <p class="fw-lighter fst-italic mx-5 px-3 text-muted mb-0">{{ request.time_create }}</p>
             <p class="fw-lighter fst-italic mx-5 px-3 text-muted fs-5">От: {{ request.author }}</p>
+            <a href="mailto:{{ request.email }}" class="fw-lighter fst-italic mx-5 px-3 text-muted fs-5">{{ request.email }}</a>
+            <p class="fw-lighter fst-italic mx-5 px-3 text-muted fs-5">{{ request.FIO }}</p>
             <p class="fst-italic mx-5 px-5 text-muted fs-4">{{ request.description }}</p>
+            {% if request.file %}
+                <div><a target="_blank" class="bg-warning shadow rounded-3 p-2"
+                        style="text-decoration: None; color: ghostwhite" href="{{ request.file.url }}"><img
+                        style="width: 4%" src="{% static 'paperclip.png' %}"> {{ request.file.name|normalfile }}
+                    <small>{{ request.file.size|getmb }} МБ</small></a></div>
+            {% endif %}
+
             {% if r.status %}
                 <p class="fst-italic mx-3 px-3 fs-4">Статус:
                     {% if r.status.name == 'Принято' %}
@@ -25,11 +35,12 @@
                 </p>
             {% endif %}
             {% if user.is_superuser %}
-            <a href="{% url 'all_request' 'all' %}" type="button" class="ms-5 btn btn-outline-primary">Назад</a>
-            <form style="display: inline" action="{% url 'edit' request.pk %}" method="get">
-                <input type="submit" value="Изменить статус" class="ms-3 btn btn-outline-secondary">
-            </form>
-            <a href="{% url 'answer' request.pk %}" type="button" class="ms-3 btn btn-outline-secondary">Ответить</a>
+                <a href="{% url 'all_request' 'all' %}" type="button" class="ms-5 btn btn-outline-primary">Назад</a>
+                <form style="display: inline" action="{% url 'edit' request.pk %}" method="get">
+                    <input type="submit" value="Изменить статус" class="ms-3 btn btn-outline-secondary">
+                </form>
+                <a href="{% url 'answer' request.pk %}" type="button"
+                   class="ms-3 btn btn-outline-secondary">Ответить</a>
             {% endif %}
         </div>
     </div>

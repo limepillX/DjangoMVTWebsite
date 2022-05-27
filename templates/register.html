@@ -30,9 +30,6 @@
                 <div>{{ p.errors }}</div>
             {% endfor %}
             <div class="d-flex justify-content-center mt-3">
-                <a class="d-flex justify-content-center" href="{% url 'social:begin' 'facebook' %}"><img
-                        src="{% static 'facebook.png' %}" alt="mdo" width="50" height="50"
-                        class="rounded-circle shadow border border-2"></a>
                 <a class="d-flex justify-content-center ms-3" href="{% url 'social:begin' 'vk-oauth2' %}"><img
                         src="{% static 'vk.png' %}" alt="mdo" width="50" height="50"
                         class="rounded-circle shadow border border-2"></a>

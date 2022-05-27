@@ -4,9 +4,15 @@ from .models import *
 
 # Register your models here.
 class ReqestAdmin(admin.ModelAdmin):
-    list_display = ('subject', 'status', 'time_create', 'time_update', 'author')
-    list_display_links = ('subject', 'status', 'time_create', 'time_update', 'author')
-    search_fields = ('subject', 'status', 'time_create', 'time_update', 'author')
+    list_display = ('subject', 'status', 'time_create', 'time_update', 'author', 'tag', 'file')
+    list_display_links = ('subject', 'status', 'time_create', 'time_update', 'author', 'tag')
+    search_fields = ('subject', 'status', 'time_create', 'time_update', 'author', 'tag')
+
+
+class TagsAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'name')
+    list_display_links = ('pk', 'name')
+    search_fields = ('pk', 'name')
 
 
 class AnswerAdmin(admin.ModelAdmin):
@@ -34,6 +40,7 @@ class LogsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Logs, LogsAdmin)
+admin.site.register(Tags, TagsAdmin)
 admin.site.register(Posts, PostsAdmin)
 admin.site.register(RequestAnswer, AnswerAdmin)
 admin.site.register(Request, ReqestAdmin)

@@ -4,28 +4,67 @@
 {% block title %}
     {{ header }}
 {% endblock %}
-{% block content %}
-    <div class="container">
-    <h1 class="fst-italic fw-lighter">{{ header }}</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-error"> {{ form.non_field_errors }}</div>
 
-        {% for p in form %}
-            {% if p.label == "Author" or p.label == "Получатель" or p.label == "Запрос"%}
-                <div hidden>{{ p }}</div>
-            {% else %}
-                <label for="{{ p.id_for_label }}" class="my-3"> <h3>{{ p.label }}:</h3>{{ p }}</label>
-                <div>{{ p.errors }}</div>
-            {% endif %}
-        {% endfor %}
-        <div class='homebutton'>
+{% block content %}
+
+    <script id="docvar">
+
+        function InputText(type) {
+            let i = 0;
+            let startname = '{{ answeron.author }}'
+            let name = ''
+            while (startname[i] !== '(') {
+                if (i === startname.length){
+                    break
+                }
+                name += startname[i]
+                i += 1
+            }
+            let body = ``
+            doc = document.getElementsByName("description")[0]
+
+            if (type === 'appr') {
+                body = `Мы просмотрели Ваш запрос '{{ answeron.subject }}', и хотим донести, что мы согласны с Вашим видением.\nВаш запрос одобрен, и будет исполнен!`
+            }
+            if (type === 'vedom') {
+                body = `Мы просмотрели Ваш запрос '{{ answeron.subject }}'. Запрос всё ещё находится на рассмотрении и был отправлен в необходимые ведомства.\nВ кратчайшие сроки пришлём Вам ответ.`
+            }
+            if (type === 'decl') {
+                body = `Мы просмотрели Ваш запрос '{{ answeron.subject }}'.\nК сожалению, нам пришлось отклонить запрос. Можете отправить запрос повторно, если это требуется, обосновав свою точку зрения более подробно`
+            }
+
+            doc.innerHTML = `Доброго времени суток, {% if answeron.FIO %}{{ answeron.FIO }}{% else %}${name}{% endif %}!\n\n${body}\n\n_____________________\nС уважением, команда Василия пупкина.\nИ-мейл: vaspupkin@gmail.com\nТелефон: +375291233333`
+
+        }
+    </script>
+
+    <div class="container">
+        <h1 class="fst-italic fw-lighter mb-3">{{ header }}</h1>
+        {% if type == 'answer' %}
+            <nobr class="fs-3">Шаблоны ответа:</nobr>
+            <button class="btn btn-primary mx-1 fs-5" onclick="InputText('appr')">Приняли</button>
+            <button class="btn btn-warning mx-1 fs-5" onclick="InputText('vedom')">В ведомства</button>
+            <button class="btn btn-danger mx-1 fs-5" onclick="InputText('decl')">Отклонили</button>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-error"> {{ form.non_field_errors }}</div>
+
+            {% for p in form %}
+                {% if p.label == "Author" or p.label == "Получатель" or p.label == "Запрос" %}
+                    <div hidden>{{ p }}</div>
+                {% else %}
+                    <label for="{{ p.id_for_label }}" class="my-3"><h3>{{ p.label }}:</h3>{{ p }}</label>
+                    <div>{{ p.errors }}</div>
+                {% endif %}
+            {% endfor %}
+            <div class='homebutton'>
                 <p>
                     <button class="btn btn-primary shadow fw-light mt-4 fs-4" type="submit">
                         Отправить
                     </button>
                 </p>
-        </div>
-    </form>
+            </div>
+        </form>
     </div>
 {% endblock %}
